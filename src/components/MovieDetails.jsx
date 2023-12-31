@@ -41,7 +41,6 @@ export default function MovieDetails({ selectedId, onCloseMovie, onAddWatched, w
         );
 
         const data = await res.json();
-        console.log(data);
         setMovie(data);
         setIsLoading(false);
       }

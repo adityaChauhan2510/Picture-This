@@ -1,30 +1,29 @@
 import { useEffect, useState } from "react";
 
-import Navbar from './components/Navbar'
-import Loader  from "./components/Loader";
-import ErrorMessage  from "./components/ErrorMessage";
-import Search  from "./components/Search";
-import NumResults  from "./components/NumResults";
-import Main  from "./components/Main";
-import Box  from "./components/Box";
-import MovieList  from "./components/MovieList";
+import Navbar from "./components/Navbar";
+import Loader from "./components/Loader";
+import ErrorMessage from "./components/ErrorMessage";
+import Search from "./components/Search";
+import NumResults from "./components/NumResults";
+import Main from "./components/Main";
+import Box from "./components/Box";
+import MovieList from "./components/MovieList";
 import WatchedMoviesList from "./components/WatchedMoviesList";
-import MovieDetails  from "./components/MovieDetails";
-import WatchedSummary  from "./components/WatchedSummary";
-
-
-
+import MovieDetails from "./components/MovieDetails";
+import WatchedSummary from "./components/WatchedSummary";
+import { useLocalStorageState } from "./components/useLocalStorageState";
 
 export const KEY = import.meta.env.VITE_KEY;
 
-
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("interstellar");
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+
+  //custom hook
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -52,7 +51,7 @@ export default function App() {
           setError("");
 
           const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+            `https://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
             { signal: controller.signal }
           );
 
@@ -80,6 +79,8 @@ export default function App() {
         setError("");
         return;
       }
+
+      handleCloseMovie();
       fetchMovies();
 
       return function () {
@@ -127,7 +128,3 @@ export default function App() {
     </>
   );
 }
-
-
-
-
