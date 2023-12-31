@@ -13,7 +13,7 @@ import MovieDetails from "./components/MovieDetails";
 import WatchedSummary from "./components/WatchedSummary";
 import { useLocalStorageState } from "./components/useLocalStorageState";
 
-export const KEY = import.meta.env.VITE_KEY;
+export const KEY = "e8896aa7";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
