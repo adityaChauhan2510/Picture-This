@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
-import Loader  from "./Loader";
+import Loader from "./Loader";
 import { KEY } from "../App";
 
-export default function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
+export default function MovieDetails({
+  selectedId,
+  onCloseMovie,
+  onAddWatched,
+  watched,
+}) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
@@ -14,7 +19,16 @@ export default function MovieDetails({ selectedId, onCloseMovie, onAddWatched, w
   )?.userRating;
 
   const {
-    Title: title, Year: year, Poster: poster, Runtime: runtime, imdbRating: imdbRating, Plot: plot, Released: released, Actors: actors, Director: director, Genre: genre,
+    Title: title,
+    Year: year,
+    Poster: poster,
+    Runtime: runtime,
+    imdbRating: imdbRating,
+    Plot: plot,
+    Released: released,
+    Actors: actors,
+    Director: director,
+    Genre: genre,
   } = movie;
 
   function handleAdd() {
@@ -37,7 +51,7 @@ export default function MovieDetails({ selectedId, onCloseMovie, onAddWatched, w
       async function getMovieDetails() {
         setIsLoading(true);
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
+          `https://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
         );
 
         const data = await res.json();
@@ -92,7 +106,8 @@ export default function MovieDetails({ selectedId, onCloseMovie, onAddWatched, w
                   <StarRating
                     maxRating={10}
                     size={24}
-                    onSetRating={setUserRating} />
+                    onSetRating={setUserRating}
+                  />
 
                   {userRating > 0 && (
                     <button className="btn-add" onClick={handleAdd}>
